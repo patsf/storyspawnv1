@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StorySpawn</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto+Mono:wght@400;500&family=Sora:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --color-danger-glow: rgba(239, 68, 68, 0.25);
+        --backdrop-color: rgba(12, 10, 9, 0.85);
+        --onboarding-backdrop-color: rgba(12, 10, 9, 0.9);
+
+        /* Base Theme (Stone/Dark) */
+        --color-background-primary: #0c0a09;
+        --color-background-secondary: #1c1917;
+        --color-surface-primary: #292524;
+        --color-surface-secondary: rgba(41, 37, 36, 0.75);
+        --color-border-primary: #44403c;
+        --color-interactive-secondary: #57534e;
+        --color-text-primary: #e7e5e4;
+        --color-text-secondary: #a8a29e;
+
+        --color-accent-primary: #3b82f6; /* blue-500 */
+        --color-accent-secondary: #60a5fa; /* blue-400 */
+        --color-accent-text: #93c5fd; /* blue-300 */
+        --color-accent-glow: rgba(59, 130, 246, 0.3);
+      }
+      /* Default Theme (Cool Blue/Slate) */
+      body.theme-default {
+        --color-background-primary: #0f172a; /* slate-900 */
+        --color-background-secondary: #1e293b; /* slate-800 */
+        --color-surface-primary: #334155; /* slate-700 */
+        --color-surface-secondary: rgba(51, 65, 85, 0.75);
+        --color-border-primary: #475569; /* slate-600 */
+        --color-interactive-secondary: #64748b; /* slate-500 */
+        --color-text-primary: #e2e8f0; /* slate-200 */
+        --color-text-secondary: #94a3b8; /* slate-400 */
+        --color-accent-primary: #3b82f6; /* blue-500 */
+        --color-accent-secondary: #60a5fa; /* blue-400 */
+        --color-accent-text: #93c5fd; /* blue-300 */
+        --color-accent-glow: rgba(59, 130, 246, 0.3);
+      }
+      body.time-of-day-evening {
+        --color-background-primary: #1a120b;
+        --color-background-secondary: #2c1d10;
+        --color-surface-primary: #422f18;
+        --color-border-primary: #5e4a33;
+        --color-accent-primary: #f97316; /* orange-500 */
+        --color-accent-secondary: #fb923c; /* orange-400 */
+        --color-accent-text: #fdba74; /* orange-300 */
+        --color-accent-glow: rgba(249, 115, 22, 0.3);
+        --backdrop-color: rgba(26, 18, 11, 0.85);
+      }
+      body.time-of-day-night {
+        --color-background-primary: #020617; /* slate-950 */
+        --color-background-secondary: #0f172a; /* slate-900 */
+        --color-surface-primary: #1e293b; /* slate-800 */
+        --color-border-primary: #334155; /* slate-700 */
+        --color-accent-primary: #60a5fa; /* blue-400 */
+        --color-accent-secondary: #93c5fd; /* blue-300 */
+        --color-accent-text: #bfdbfe; /* blue-200 */
+        --color-accent-glow: rgba(96, 165, 250, 0.3);
+        --backdrop-color: rgba(2, 6, 23, 0.85);
+      }
+      /* Color Themes */
+      body.theme-crimson {
+        --color-background-primary: #1f1212;
+        --color-background-secondary: #2f1d1d;
+        --color-surface-primary: #422929;
+        --color-surface-secondary: rgba(66, 41, 41, 0.75);
+        --color-border-primary: #5c3a3a;
+        --color-interactive-secondary: #754a4a;
+        --color-text-primary: #e7e5e4;
+        --color-text-secondary: #ad8f8f;
+        --color-accent-primary: #ef4444; /* red-500 */
+        --color-accent-secondary: #f87171; /* red-400 */
+        --color-accent-text: #fca5a5; /* red-300 */
+        --color-accent-glow: rgba(239, 68, 68, 0.3);
+      }
+      body.theme-emerald {
+        --color-background-primary: #061512;
+        --color-background-secondary: #0a241d;
+        --color-surface-primary: #11382c;
+        --color-surface-secondary: rgba(17, 56, 44, 0.75);
+        --color-border-primary: #1c4f40;
+        --color-interactive-secondary: #276654;
+        --color-text-primary: #e7e5e4;
+        --color-text-secondary: #599c8a;
+        --color-accent-primary: #10b981; /* emerald-500 */
+        --color-accent-secondary: #34d399; /* emerald-400 */
+        --color-accent-text: #6ee7b7; /* emerald-300 */
+        --color-accent-glow: rgba(16, 185, 129, 0.3);
+      }
+      body.theme-violet {
+        --color-background-primary: #100d1a;
+        --color-background-secondary: #1e1b2b;
+        --color-surface-primary: #2d2840;
+        --color-surface-secondary: rgba(45, 40, 64, 0.75);
+        --color-border-primary: #413a5c;
+        --color-interactive-secondary: #554d78;
+        --color-text-primary: #e7e5e4;
+        --color-text-secondary: #8a81b0;
+        --color-accent-primary: #8b5cf6; /* violet-500 */
+        --color-accent-secondary: #a78bfa; /* violet-400 */
+        --color-accent-text: #c4b5fd; /* violet-300 */
+        --color-accent-glow: rgba(139, 92, 246, 0.3);
+      }
+      body.theme-amber {
+        --color-background-primary: #1f1404;
+        --color-background-secondary: #2e2008;
+        --color-surface-primary: #43300f;
+        --color-surface-secondary: rgba(67, 48, 15, 0.75);
+        --color-border-primary: #5f461a;
+        --color-interactive-secondary: #7b5d27;
+        --color-text-primary: #e7e5e4;
+        --color-text-secondary: #b59257;
+        --color-accent-primary: #f59e0b; /* amber-500 */
+        --color-accent-secondary: #fbbf24; /* amber-400 */
+        --color-accent-text: #fcd34d; /* amber-300 */
+        --color-accent-glow: rgba(245, 158, 11, 0.3);
+      }
+      body.theme-cyberpunk {
+          --color-background-primary: #0d0221;
+          --color-background-secondary: #0c001f;
+          --color-surface-primary: #24174d;
+          --color-surface-secondary: rgba(36, 23, 77, 0.75);
+          --color-border-primary: #4d3d82;
+          --color-interactive-secondary: #362963;
+          --color-text-primary: #ccf3ff;
+          --color-text-secondary: #6c92a6;
+          --color-accent-primary: #ff00ff; /* Magenta */
+          --color-accent-secondary: #ff69ff;
+          --color-accent-text: #00ffff; /* Cyan */
+          --color-accent-glow: rgba(255, 0, 255, 0.4);
+          --backdrop-color: rgba(13, 2, 33, 0.85);
+          --onboarding-backdrop-color: rgba(13, 2, 33, 0.9);
+      }
+      body.theme-solaris {
+          --color-background-primary: #2B1704;
+          --color-background-secondary: #40250A;
+          --color-surface-primary: #563514;
+          --color-surface-secondary: rgba(86, 53, 20, 0.75);
+          --color-border-primary: #754D24;
+          --color-interactive-secondary: #906233;
+          --color-text-primary: #FFF0E1;
+          --color-text-secondary: #D4BBA5;
+          --color-accent-primary: #FF7B00; /* Bright Orange */
+          --color-accent-secondary: #FF9833;
+          --color-accent-text: #FFD2A8;
+          --color-accent-glow: rgba(255, 123, 0, 0.4);
+          --backdrop-color: rgba(43, 23, 4, 0.85);
+          --onboarding-backdrop-color: rgba(43, 23, 4, 0.9);
+      }
+      body.theme-aurora {
+          --color-background-primary: #011526;
+          --color-background-secondary: #012436;
+          --color-surface-primary: #012E40;
+          --color-surface-secondary: rgba(1, 46, 64, 0.75);
+          --color-border-primary: #025959;
+          --color-interactive-secondary: #037373;
+          --color-text-primary: #F2F2F2;
+          --color-text-secondary: #A6A6A6;
+          --color-accent-primary: #3CA6A6; /* Teal */
+          --color-accent-secondary: #5DBFBF;
+          --color-accent-text: #85D9D9;
+          --color-accent-glow: rgba(60, 166, 166, 0.4);
+          --backdrop-color: rgba(1, 21, 38, 0.85);
+          --onboarding-backdrop-color: rgba(1, 21, 38, 0.9);
+      }
+      body.theme-grove {
+          --color-background-primary: #1A210D;
+          --color-background-secondary: #212B12;
+          --color-surface-primary: #2A361A;
+          --color-surface-secondary: rgba(42, 54, 26, 0.75);
+          --color-border-primary: #3A4A22;
+          --color-interactive-secondary: #4D612E;
+          --color-text-primary: #FEFAE0;
+          --color-text-secondary: #D4D1BC;
+          --color-accent-primary: #606C38; /* Olive Green */
+          --color-accent-secondary: #8A9A5B;
+          --color-accent-text: #B2C288;
+          --color-accent-glow: rgba(96, 108, 56, 0.4);
+          --backdrop-color: rgba(26, 33, 13, 0.85);
+          --onboarding-backdrop-color: rgba(26, 33, 13, 0.9);
+      }
+      body.theme-midnight {
+        --color-background-primary: #020408;
+        --color-background-secondary: #0a0c10;
+        --color-surface-primary: #14161b;
+        --color-surface-secondary: rgba(20, 22, 27, 0.75);
+        --color-border-primary: #22252b;
+        --color-interactive-secondary: #303339;
+        --color-text-primary: #f1f1f1;
+        --color-text-secondary: #a8a8a8;
+        --color-accent-primary: #5865F2; /* Discord Blurple */
+        --color-accent-secondary: #7289da;
+        --color-accent-text: #b9bbbe;
+        --color-accent-glow: rgba(88, 101, 242, 0.4);
+      }
+      body.theme-daybreak {
+        --color-background-primary: #ffffff;
+        --color-background-secondary: #f2f3f5;
+        --color-surface-primary: #e3e5e8;
+        --color-surface-secondary: rgba(227, 229, 232, 0.75);
+        --color-border-primary: #d5d8dc;
+        --color-interactive-secondary: #b5bac1;
+        --color-text-primary: #060607;
+        --color-text-secondary: #4f5660;
+        --color-accent-primary: #3b82f6; /* blue-500 */
+        --color-accent-secondary: #60a5fa; /* blue-400 */
+        --color-accent-text: #2563eb; /* blue-600 */
+        --color-accent-glow: rgba(59, 130, 246, 0.2);
+        --backdrop-color: rgba(255, 255, 255, 0.85);
+        --onboarding-backdrop-color: rgba(255, 255, 255, 0.9);
+      }
+      body.theme-dune {
+          --color-background-primary: #2a211c;
+          --color-background-secondary: #3e322b;
+          --color-surface-primary: #4d3d33;
+          --color-surface-secondary: rgba(77, 61, 51, 0.75);
+          --color-border-primary: #6c574c;
+          --color-interactive-secondary: #8b7266;
+          --color-text-primary: #f3e9e2;
+          --color-text-secondary: #c4b6ad;
+          --color-accent-primary: #d97706; /* amber-600 */
+          --color-accent-secondary: #f59e0b; /* amber-500 */
+          --color-accent-text: #fbbf24; /* amber-400 */
+          --color-accent-glow: rgba(217, 119, 6, 0.3);
+      }
+      body.theme-rose {
+          --color-background-primary: #2c2125;
+          --color-background-secondary: #413238;
+          --color-surface-primary: #4f3e45;
+          --color-surface-secondary: rgba(79, 62, 69, 0.75);
+          --color-border-primary: #735b66;
+          --color-interactive-secondary: #977a86;
+          --color-text-primary: #f5ebe0;
+          --color-text-secondary: #d3c4b8;
+          --color-accent-primary: #e1a5a9;
+          --color-accent-secondary: #f1c7ca;
+          --color-accent-text: #d68f95;
+          --color-accent-glow: rgba(225, 165, 169, 0.3);
+      }
+      body.theme-abyss {
+          --color-background-primary: #020c14;
+          --color-background-secondary: #031422;
+          --color-surface-primary: #042a3a;
+          --color-surface-secondary: rgba(4, 42, 58, 0.75);
+          --color-border-primary: #06455c;
+          --color-interactive-secondary: #08607e;
+          --color-text-primary: #e0f2fe;
+          --color-text-secondary: #bae6fd;
+          --color-accent-primary: #2dd4bf; /* teal-400 */
+          --color-accent-secondary: #5eead4; /* teal-300 */
+          --color-accent-text: #99f6e4; /* teal-200 */
+          --color-accent-glow: rgba(45, 212, 191, 0.3);
+      }
+      
+      body {
+        background-color: var(--color-background-primary);
+        color: var(--color-text-primary);
+        transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+      }
+      .heading-font {
+        font-family: 'Sora', sans-serif;
+        text-shadow: 0 0 10px rgba(255,255,255,0.1);
+      }
+      .animated-topography {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        width: 100%;
+        height: 100%;
+        color: var(--color-interactive-secondary);
+        opacity: 0.15;
+        background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='a' width='100' height='100' patternUnits='userSpaceOnUse'%3E%3Cpath d='M0 50Q25 25 50 50T100 50' stroke='currentColor' stroke-width='1.5' fill='none'/%3E%3Cpath d='M0 100Q25 75 50 100T100 100' stroke='currentColor' stroke-width='1.5' fill='none'/%3E%3Cpath d='M50 0Q25 25 50 50T75 25 50 0' stroke='currentColor' stroke-width='1.5' fill='none'/%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23a)'/%3E%3C/svg%3E");
+        animation: topography-pan 40s linear infinite;
+        will-change: background-position;
+        transition: color 0.5s ease-in-out;
+      }
+      @keyframes topography-pan {
+        0% { background-position: 0 0; }
+        100% { background-position: 200px 200px; }
+      }
+      .dynamic-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-size: cover;
+        background-position: center;
+        transition: background-image 1s ease-in-out, opacity 1s ease-in-out;
+        z-index: -1;
+      }
+      .dynamic-bg::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--backdrop-color); /* stone-950 with opacity */
+        backdrop-filter: blur(4px);
+        transition: background 1s ease-in-out;
+      }
+      .bg-env-default { background-image: url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=2070&auto=format&fit=crop'); }
+      .bg-env-castle { background-image: url('https://images.unsplash.com/photo-1596739414811-a13f0babc5a3?q=80&w=2070&auto=format&fit=crop'); }
+      .bg-env-enchanted_forest { background-image: url('https://images.unsplash.com/photo-1476231682828-37e571bc172f?q=80&w=2070&auto=format&fit=crop'); }
+      .bg-env-tavern { background-image: url('https://images.unsplash.com/photo-1543007168-5fa9b3c53603?q=80&w=2070&auto=format&fit=crop'); }
+      .bg-env-sci-fi_bridge { background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2070&auto=format&fit=crop'); }
+      .bg-env-dungeon { background-image: url('https://images.unsplash.com/photo-1615114813296-5b653b65313c?q=80&w=2070&auto=format&fit=crop'); }
+      
+      /* Custom scrollbar styles */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--color-background-secondary);
+      }
+      ::-webkit-scrollbar-thumb {
+        background-color: var(--color-border-primary);
+        border-radius: 4px;
+        border: 2px solid var(--color-background-secondary);
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background-color: var(--color-interactive-secondary);
+      }
+      /* Hide scrollbar for specific elements but keep functionality */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+      }
+
+      /* Low Health Effect */
+      .low-health-effect::after {
+        content: '';
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 100;
+        box-shadow: inset 0 0 100px 20px var(--color-danger-glow);
+        animation: lowHealthPulse 2s ease-in-out infinite;
+        opacity: 0;
+      }
+
+      @keyframes lowHealthPulse {
+        0%, 100% { opacity: 0.8; }
+        50% { opacity: 1; }
+      }
+      
+      .story-marker {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        margin: 0.25rem 0;
+        font-style: italic;
+      }
+      .story-marker-event {
+        background-color: rgba(250, 204, 21, 0.1);
+        border: 1px solid rgba(250, 204, 21, 0.2);
+        color: #facc15; /* yellow-400 */
+      }
+      .story-marker-discovery {
+        background-color: rgba(59, 130, 246, 0.1);
+        border: 1px solid rgba(59, 130, 246, 0.2);
+        color: #60a5fa; /* blue-400 */
+      }
+      .story-marker-combat {
+        background-color: rgba(239, 68, 68, 0.1);
+        border: 1px solid rgba(239, 68, 68, 0.2);
+        color: #f87171; /* red-400 */
+      }
+      .story-marker-location {
+        background-color: rgba(22, 163, 74, 0.1);
+        border: 1px solid rgba(22, 163, 74, 0.2);
+        color: #4ade80; /* green-400 */
+      }
+      
+      @keyframes screenShake {
+        0%, 100% { transform: translate(0, 0); }
+        10%, 30%, 50%, 70%, 90% { transform: translate(-2px, 2px); }
+        20%, 40%, 60%, 80% { transform: translate(2px, -2px); }
+      }
+      .screen-shake {
+        animation: screenShake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+      }
+      .glow-focus {
+        animation: glowFocus 2s ease-in-out;
+        box-shadow: 0 0 20px 5px var(--color-accent-glow);
+      }
+      @keyframes glowFocus {
+        0% { box-shadow: 0 0 0px var(--color-accent-glow); }
+        50% { box-shadow: 0 0 20px 5px var(--color-accent-glow); }
+        100% { box-shadow: 0 0 0px var(--color-accent-glow); }
+      }
+      
+      .status-vignette {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 100;
+        animation: statusVignetteFade 2.5s ease-out;
+        box-shadow: var(--shadow-color);
+        opacity: 0;
+      }
+      @keyframes statusVignetteFade {
+        0% { opacity: 0; }
+        25% { opacity: 0.7; }
+        100% { opacity: 0; }
+      }
+      
+      /* Accessibility */
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+          scroll-behavior: auto !important;
+        }
+      }
+       .reduced-motion *, .reduced-motion *::before, .reduced-motion *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+          scroll-behavior: auto !important;
+       }
+    </style>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              'mono': ['Roboto Mono', 'monospace'],
+              'sans': ['Inter', 'sans-serif'],
+              'heading': ['Sora', 'sans-serif'],
+            },
+            colors: {
+                accent: {
+                  DEFAULT: 'var(--color-accent-primary)',
+                  hover: 'var(--color-accent-secondary)',
+                  text: 'var(--color-accent-text)',
+                },
+                background: {
+                  primary: 'var(--color-background-primary)',
+                  secondary: 'var(--color-background-secondary)',
+                },
+                surface: {
+                  primary: 'var(--color-surface-primary)',
+                  secondary: 'var(--color-surface-secondary)',
+                },
+                border: {
+                  primary: 'var(--color-border-primary)',
+                },
+                interactive: {
+                  secondary: 'var(--color-interactive-secondary)',
+                },
+                text: {
+                  primary: 'var(--color-text-primary)',
+                  secondary: 'var(--color-text-secondary)',
+                }
+            },
+            animation: {
+              'fade-in': 'fadeIn 0.5s ease-in-out',
+              'slide-in-up': 'slideInUp 0.5s ease-in-out',
+              'subtle-pulse': 'subtlePulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'tooltip-fade-in': 'tooltipFadeIn 0.2s ease-in-out',
+              'fade-in-out': 'fadeInOut 2.5s ease-in-out forwards',
+              'glow': 'glow 2.5s ease-in-out infinite alternate',
+              'glow-and-fade': 'glowAndFade 2.5s ease-out forwards',
+              'blink': 'blink 1s step-start infinite',
+            },
+            keyframes: {
+              fadeIn: {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              },
+              fadeInOut: {
+                '0%': { opacity: '0' },
+                '20%': { opacity: '1' },
+                '80%': { opacity: '1' },
+                '100%': { opacity: '0' },
+              },
+              tooltipFadeIn: {
+                '0%': { opacity: '0', transform: 'scale(0.95) translateY(5px)' },
+                '100%': { opacity: '1', transform: 'scale(1) translateY(0)' },
+              },
+              slideInUp: {
+                '0%': { opacity: '0', transform: 'translateY(20px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              subtlePulse: {
+                '0%, 100%': { opacity: 1, transform: 'scale(1)' },
+                '50%': { opacity: 0.9, transform: 'scale(1.02)' },
+              },
+              blink: { 
+                '50%': { opacity: '0' } 
+              },
+              glow: {
+                'from': { 'box-shadow': '0 0 4px var(--color-accent-glow), 0 0 8px var(--color-accent-glow)' },
+                'to': { 'box-shadow': '0 0 12px var(--color-accent-glow), 0 0 16px var(--color-accent-glow)' },
+              },
+              glowAndFade: {
+                '0%': { 'background-color': 'var(--color-accent-glow)' },
+                '100%': { 'background-color': 'transparent' },
+              },
+            },
+          },
+        },
+      }
+    </script>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.1.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
+    "react/": "https://aistudiocdn.com/react@^19.1.1/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.19.0"
+  }
+}
+</script>
+</head>
+  <body class="font-sans">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

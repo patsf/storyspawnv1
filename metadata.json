@@ -1,0 +1,7 @@
+{
+  "name": "StorySpawn",
+  "description": "An AI-powered storytelling platform where your choices shape a dynamic world. Create your own adventure or play a demo, and watch as the story, characters, quests, and lore evolve with every decision you make.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
